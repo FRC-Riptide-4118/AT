@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------------
+Gerber File Extension Report For: s2m.GBR   5/5/2023  11:55:00 AM
+------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------
+Layer Extension     Layer Description                      
+------------------------------------------------------------------------------------------
+.GTO                Top Overlay                             
+.GTP                Top Paste                               
+.GTS                Top Solder                              
+.GTL                Top Layer                               
+.GBL                Bottom Layer                            
+.GBS                Bottom Solder                           
+.GBP                Bottom Paste                            
+.GBO                Bottom Overlay                          
+.GM1                Mechanical 1                            
+.GM19               Top Designator                          
+.GM20               Bottom Designator                       
+.GKO                Keep-Out Layer                          
+.GPT                Top Pad Master                          
+.GPB                Bottom Pad Master                       
+------------------------------------------------------------------------------------------

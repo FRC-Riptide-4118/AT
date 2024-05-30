@@ -1,0 +1,18 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: bb8.PcbDoc   5/24/2024  10:58:40 PM
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII Plated RoundHoles File : bb8-Plated.TXT
+ASCII Non-Plated RoundHoles File : bb8-NonPlated.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      12mil (0.305mm)                                           Round             4         PTH        0.29inch (7.49mm)
+T2      47mil (1.2mm)                                             Round             20        PTH        8.52inch (216.52mm)
+T3      73mil (1.85mm)                                            Round             10        PTH        4.05inch (102.81mm)
+T4      69mil (1.75mm)                                            Round             2         NPTH       0.28inch (7.00mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              36
+
+Total Processing Time (hh:mm:ss) : 00:00:00

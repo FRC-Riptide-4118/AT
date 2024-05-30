@@ -1,0 +1,36 @@
+Change Component Designator: OldDesignator=3 NewDesignator=J1
+Added Component: Designator=SW1(SW_4118)
+Added Component: Designator=SW2(SW_4118)
+Added Component: Designator=SW3(SW_4118)
+Added Component: Designator=SW4(SW_4118)
+Added Component: Designator=SW5(SW_4118)
+Added Pin To Net: NetName=SLEEVE Pin=J1-1
+Added Pin To Net: NetName=SLEEVE Pin=J1-3
+Added Pin To Net: NetName=SLEEVE Pin=SW1-1
+Added Pin To Net: NetName=SLEEVE Pin=SW1-2
+Added Pin To Net: NetName=SLEEVE Pin=SW2-1
+Added Pin To Net: NetName=SLEEVE Pin=SW2-2
+Added Pin To Net: NetName=SLEEVE Pin=SW3-1
+Added Pin To Net: NetName=SLEEVE Pin=SW3-2
+Added Pin To Net: NetName=SLEEVE Pin=SW4-1
+Added Pin To Net: NetName=SLEEVE Pin=SW4-2
+Added Pin To Net: NetName=SLEEVE Pin=SW5-1
+Added Pin To Net: NetName=SLEEVE Pin=SW5-2
+Added Net: Name=SLEEVE
+Added Pin To Net: NetName=TIP Pin=J1-2
+Added Pin To Net: NetName=TIP Pin=SW1-3
+Added Pin To Net: NetName=TIP Pin=SW1-4
+Added Pin To Net: NetName=TIP Pin=SW2-3
+Added Pin To Net: NetName=TIP Pin=SW2-4
+Added Pin To Net: NetName=TIP Pin=SW3-3
+Added Pin To Net: NetName=TIP Pin=SW3-4
+Added Pin To Net: NetName=TIP Pin=SW4-3
+Added Pin To Net: NetName=TIP Pin=SW4-4
+Added Pin To Net: NetName=TIP Pin=SW5-3
+Added Pin To Net: NetName=TIP Pin=SW5-4
+Added Net: Name=TIP
+Added Member To Class: ClassName=bb8 Member=Component SW1 SW_4118
+Added Member To Class: ClassName=bb8 Member=Component SW2 SW_4118
+Added Member To Class: ClassName=bb8 Member=Component SW3 SW_4118
+Added Member To Class: ClassName=bb8 Member=Component SW4 SW_4118
+Added Member To Class: ClassName=bb8 Member=Component SW5 SW_4118

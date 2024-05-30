@@ -1,0 +1,6 @@
+Added Component: Designator=TH1(PTH-M2D5X5)
+Add component (AddParameter): Name = "Pins"; Value = "1"; VariantName = "[No Variations]"
+Added Component: Designator=TH2(PTH-M2D5X5)
+Add component (AddParameter): Name = "Pins"; Value = "1"; VariantName = "[No Variations]"
+Added Member To Class: ClassName=s2m Member=Component TH1 PTH-M2D5X5
+Added Member To Class: ClassName=s2m Member=Component TH2 PTH-M2D5X5

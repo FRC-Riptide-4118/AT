@@ -1,0 +1,200 @@
+*************************************************************
+FileName = s2m.GBR
+AutoAperture = True
+*************************************************************
+Generating : Top Pad Master
+      File : s2m.GPT
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D11
+    D12
+    D13
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : s2m.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : s2m.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D11
+    D12
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : s2m.GPB
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : s2m.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : s2m.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D16
+    D17
+    D18
+    D19
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : s2m.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : s2m.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+    D23
+*************************************************************
+
+*************************************************************
+Generating : Top Designator
+      File : s2m.GM19
+
+    Adding Layer      : Top Designator
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Bottom Designator
+      File : s2m.GM20
+
+    Adding Layer      : Bottom Designator
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : s2m.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+    D20
+    D21
+    D22
+*************************************************************
+
+*************************************************************
+Generating : Top Layer
+      File : s2m.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D11
+    D12
+    D13
+    D20
+    D21
+    D22
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : s2m.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D10
+*************************************************************
+
+*************************************************************
+Generating : Keep-Out Layer
+      File : s2m.GKO
+
+    Adding Layer      : Keep-Out Layer
+
+
+Used DCodes :
+*************************************************************
+
