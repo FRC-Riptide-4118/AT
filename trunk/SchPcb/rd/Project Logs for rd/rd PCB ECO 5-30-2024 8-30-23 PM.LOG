@@ -1,0 +1,7 @@
+Added Pin To Net: NetName=RING_SLEEVE Pin=J1-1
+Added Pin To Net: NetName=RING_SLEEVE Pin=J1-3
+Added Pin To Net: NetName=RING_SLEEVE Pin=KEY1-2
+Added Net: Name=RING_SLEEVE
+Added Pin To Net: NetName=TIP Pin=J1-2
+Added Pin To Net: NetName=TIP Pin=KEY1-1
+Added Net: Name=TIP
