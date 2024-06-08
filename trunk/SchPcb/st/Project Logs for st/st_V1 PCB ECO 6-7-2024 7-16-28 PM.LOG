@@ -1,0 +1,3 @@
+Change Component Designator: OldDesignator=U12 NewDesignator=U13
+Change Component Designator: OldDesignator=U13 NewDesignator=U12
+Added Member To Class: ClassName=st_v1 Member=Component U13 TSR3386

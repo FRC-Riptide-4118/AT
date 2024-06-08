@@ -1,0 +1,13 @@
+Added Component: Designator=U4(SOT-23-6)
+Added Pin To Net: NetName=NetR4_1 Pin=U4-1
+Added Pin To Net: NetName=GND Pin=U4-2
+Added Pin To Net: NetName=NetC7_1 Pin=U4-3
+Added Pin To Net: NetName=SENSE Pin=U4-4
+Added Pin To Net: NetName=1V8 Pin=U4-5
+Added Pin To Net: NetName=NetR5_1 Pin=U4-6
+Add Pin To Net: Unknown Pin: Pin U5-1
+Add Pin To Net: Unknown Pin: Pin U5-2
+Add Pin To Net: Unknown Pin: Pin U5-3
+Add Pin To Net: Unknown Pin: Pin U5-4
+Added Member To Class: ClassName=st_v1 Member=Component U4 MTCH101
+Add Class Member: Failed to add class member : Component U5 CPC1017N

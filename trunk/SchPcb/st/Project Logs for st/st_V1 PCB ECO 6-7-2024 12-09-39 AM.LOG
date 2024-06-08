@@ -1,0 +1,24 @@
+Added Component: Designator=U2(SOIC-14)
+Added Pin To Net: NetName=1V8 Pin=U2-1
+Added Pin To Net: NetName=uP_LED0 Pin=U2-2
+Added Pin To Net: NetName=uP_LED1 Pin=U2-3
+Added Pin To Net: NetName=BUZZ Pin=U2-4
+Added Pin To Net: NetName=LED_CTL Pin=U2-6
+Added Pin To Net: NetName=BUZZ_CTL Pin=U2-7
+Added Pin To Net: NetName=PRESS Pin=U2-8
+Added Pin To Net: NetName=SENSE Pin=U2-9
+Added Pin To Net: NetName=RESETn Pin=U2-10
+Added Pin To Net: NetName=GND Pin=U2-14
+Add Pin To Net: Unknown Pin: Pin U4-1
+Add Pin To Net: Unknown Pin: Pin U4-2
+Add Pin To Net: Unknown Pin: Pin U4-3
+Add Pin To Net: Unknown Pin: Pin U4-4
+Add Pin To Net: Unknown Pin: Pin U4-5
+Add Pin To Net: Unknown Pin: Pin U4-6
+Add Pin To Net: Unknown Pin: Pin U5-1
+Add Pin To Net: Unknown Pin: Pin U5-2
+Add Pin To Net: Unknown Pin: Pin U5-3
+Add Pin To Net: Unknown Pin: Pin U5-4
+Added Member To Class: ClassName=st_v1 Member=Component U2 ATtiny414
+Add Class Member: Failed to add class member : Component U4 MTCH101
+Add Class Member: Failed to add class member : Component U5 CPC1017N

@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=3V Pin=R9-2
+Removed Pin From Net: NetName=3V Pin=R10-2
+Removed Pin From Net: NetName=3V Pin=R11-2
+Removed Pin From Net: NetName=3V Pin=R12-2
+Removed Pin From Net: NetName=GND Pin=U6-1
+Removed Pin From Net: NetName=GND Pin=U6-4
+Removed Member From Class: ClassName=st_v1 Member=R11
+Removed Member From Class: ClassName=st_v1 Member=R12
+Change Component Designator: OldDesignator=R11 NewDesignator=R10
+Added Pin To Net: NetName=3V Pin=P3-1
+Added Pin To Net: NetName=3V Pin=P4-1
+Added Pin To Net: NetName=3V Pin=P5-1
+Added Pin To Net: NetName=3V Pin=P6-1
+Added Pin To Net: NetName=GND Pin=R9-2
+Added Pin To Net: NetName=GND Pin=R10-2
+Added Pin To Net: NetName=NetR9_1 Pin=R9-1
+Added Pin To Net: NetName=NetR9_1 Pin=U6-4
+Added Net: Name=NetR9_1
+Added Pin To Net: NetName=NetR10_1 Pin=R10-1
+Added Pin To Net: NetName=NetR10_1 Pin=U6-1
+Added Net: Name=NetR10_1
+Added Member To Class: ClassName=st_v1 Member=Component U12 TSR3386

@@ -1,0 +1,33 @@
+Added Component: Designator=U7(RR5)
+Added Component: Designator=U9(RR5)
+Added Component: Designator=U10(RR5)
+Add Pin To Net: Unknown Pin: Pin U4-1
+Add Pin To Net: Unknown Pin: Pin U4-2
+Add Pin To Net: Unknown Pin: Pin U4-3
+Add Pin To Net: Unknown Pin: Pin U4-4
+Add Pin To Net: Unknown Pin: Pin U4-5
+Add Pin To Net: Unknown Pin: Pin U4-6
+Add Pin To Net: Unknown Pin: Pin U5-1
+Add Pin To Net: Unknown Pin: Pin U5-2
+Add Pin To Net: Unknown Pin: Pin U5-3
+Add Pin To Net: Unknown Pin: Pin U5-4
+Added Pin To Net: NetName=NetU1_1 Pin=U7-1
+Added Pin To Net: NetName=3V Pin=U7-2
+Add Pin To Net: Unknown Pin: Pin U8-1
+Add Pin To Net: Unknown Pin: Pin U8-2
+Add Pin To Net: Unknown Pin: Pin U8-3
+Add Pin To Net: Unknown Pin: Pin U8-4
+Add Pin To Net: Unknown Pin: Pin U8-5
+Add Pin To Net: Unknown Pin: Pin U8-6
+Add Pin To Net: Unknown Pin: Pin U8-7
+Add Pin To Net: Unknown Pin: Pin U8-8
+Added Pin To Net: NetName=LED_CTL Pin=U9-1
+Added Pin To Net: NetName=GND Pin=U9-2
+Added Pin To Net: NetName=BUZZ_CTL Pin=U10-1
+Added Pin To Net: NetName=GND Pin=U10-2
+Add Class Member: Failed to add class member : Component U4 MTCH101
+Add Class Member: Failed to add class member : Component U5 CPC1017N
+Added Member To Class: ClassName=st_v1 Member=Component U7 SPST_ROCKER
+Add Class Member: Failed to add class member : Component U8 TLV9062
+Added Member To Class: ClassName=st_v1 Member=Component U9 SPST_ROCKER
+Added Member To Class: ClassName=st_v1 Member=Component U10 SPST_ROCKER

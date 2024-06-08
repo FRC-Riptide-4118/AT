@@ -1,0 +1,42 @@
+Added Component: Designator=U?(SOIC-14)
+Add Pin To Net: Unknown Pin: Pin U4-1
+Add Pin To Net: Unknown Pin: Pin U4-2
+Add Pin To Net: Unknown Pin: Pin U4-3
+Add Pin To Net: Unknown Pin: Pin U4-4
+Add Pin To Net: Unknown Pin: Pin U4-5
+Add Pin To Net: Unknown Pin: Pin U4-6
+Add Pin To Net: Unknown Pin: Pin U5-1
+Add Pin To Net: Unknown Pin: Pin U5-2
+Add Pin To Net: Unknown Pin: Pin U5-3
+Add Pin To Net: Unknown Pin: Pin U5-4
+Add Pin To Net: Unknown Pin: Pin U7-1
+Add Pin To Net: Unknown Pin: Pin U7-2
+Add Pin To Net: Unknown Pin: Pin U8-1
+Add Pin To Net: Unknown Pin: Pin U8-2
+Add Pin To Net: Unknown Pin: Pin U8-3
+Add Pin To Net: Unknown Pin: Pin U8-4
+Add Pin To Net: Unknown Pin: Pin U8-5
+Add Pin To Net: Unknown Pin: Pin U8-6
+Add Pin To Net: Unknown Pin: Pin U8-7
+Add Pin To Net: Unknown Pin: Pin U8-8
+Add Pin To Net: Unknown Pin: Pin U9-1
+Add Pin To Net: Unknown Pin: Pin U9-2
+Add Pin To Net: Unknown Pin: Pin U10-1
+Add Pin To Net: Unknown Pin: Pin U10-2
+Added Pin To Net: NetName=1V8 Pin=U?-1
+Added Pin To Net: NetName=uP_LED0 Pin=U?-2
+Added Pin To Net: NetName=uP_LED1 Pin=U?-3
+Added Pin To Net: NetName=BUZZ Pin=U?-4
+Added Pin To Net: NetName=LED_CTL Pin=U?-6
+Added Pin To Net: NetName=BUZZ_CTL Pin=U?-7
+Added Pin To Net: NetName=PRESS Pin=U?-8
+Added Pin To Net: NetName=SENSE Pin=U?-9
+Added Pin To Net: NetName=RESETn Pin=U?-10
+Added Pin To Net: NetName=GND Pin=U?-14
+Add Class Member: Failed to add class member : Component U4 MTCH101
+Add Class Member: Failed to add class member : Component U5 CPC1017N
+Add Class Member: Failed to add class member : Component U7 SPST_GENERIC
+Add Class Member: Failed to add class member : Component U8 TLV9062
+Add Class Member: Failed to add class member : Component U9 SPST_GENERIC
+Add Class Member: Failed to add class member : Component U10 SPST_GENERIC
+Added Member To Class: ClassName=st_v1 Member=Component U? ATtiny414
