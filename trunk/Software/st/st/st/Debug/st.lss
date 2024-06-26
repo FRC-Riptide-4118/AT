@@ -1,0 +1,258 @@
+
+st.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803f00  00803f00  000001a0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000012c  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000003  00803f00  00803f00  000001a0  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000001a0  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001d0  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000040  00000000  00000000  0000020c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000185d  00000000  00000000  0000024c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00001540  00000000  00000000  00001aa9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000322  00000000  00000000  00002fe9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000064  00000000  00000000  0000330c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000b78  00000000  00000000  00003370  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000030  00000000  00000000  00003ee8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	28 c0       	rjmp	.+80     	; 0x54 <__bad_interrupt>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	26 c0       	rjmp	.+76     	; 0x54 <__bad_interrupt>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	21 c0       	rjmp	.+66     	; 0x54 <__bad_interrupt>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1c c0       	rjmp	.+56     	; 0x54 <__bad_interrupt>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+  1e:	1a c0       	rjmp	.+52     	; 0x54 <__bad_interrupt>
+  20:	19 c0       	rjmp	.+50     	; 0x54 <__bad_interrupt>
+  22:	18 c0       	rjmp	.+48     	; 0x54 <__bad_interrupt>
+  24:	17 c0       	rjmp	.+46     	; 0x54 <__bad_interrupt>
+  26:	16 c0       	rjmp	.+44     	; 0x54 <__bad_interrupt>
+  28:	15 c0       	rjmp	.+42     	; 0x54 <__bad_interrupt>
+  2a:	14 c0       	rjmp	.+40     	; 0x54 <__bad_interrupt>
+  2c:	13 c0       	rjmp	.+38     	; 0x54 <__bad_interrupt>
+  2e:	12 c0       	rjmp	.+36     	; 0x54 <__bad_interrupt>
+  30:	11 c0       	rjmp	.+34     	; 0x54 <__bad_interrupt>
+  32:	10 c0       	rjmp	.+32     	; 0x54 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+
+00000040 <__do_clear_bss>:
+  40:	2f e3       	ldi	r18, 0x3F	; 63
+  42:	a0 e0       	ldi	r26, 0x00	; 0
+  44:	bf e3       	ldi	r27, 0x3F	; 63
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a3 30       	cpi	r26, 0x03	; 3
+  4c:	b2 07       	cpc	r27, r18
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	66 d0       	rcall	.+204    	; 0x11e <main>
+  52:	6a c0       	rjmp	.+212    	; 0x128 <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <io_config>:
+// set up all of our IO stuff
+void io_config(void) {
+	
+	// set specific pins to be outputs
+	// note that other pins are inputs, which is the default
+	PORTB.DIRSET |= (1 << PRESS);
+  56:	e0 e2       	ldi	r30, 0x20	; 32
+  58:	f4 e0       	ldi	r31, 0x04	; 4
+  5a:	81 81       	ldd	r24, Z+1	; 0x01
+  5c:	82 60       	ori	r24, 0x02	; 2
+  5e:	81 83       	std	Z+1, r24	; 0x01
+	PORTB.DIRSET |= (1 << BUZZ) | (1 << LED0) | (1 << LED1);
+  60:	81 81       	ldd	r24, Z+1	; 0x01
+  62:	80 67       	ori	r24, 0x70	; 112
+  64:	81 83       	std	Z+1, r24	; 0x01
+	
+	// let's set the internal pull-up just in case on the SENSE line
+	// we can also invert it to make the logic cleaner
+	// going to do the same with the LED_CTL and BUZZ_CTL inputs
+	PORTB.PIN0CTRL |= PORT_PULLUPEN_bm | PORT_INVEN_bm;
+  66:	80 89       	ldd	r24, Z+16	; 0x10
+  68:	88 68       	ori	r24, 0x88	; 136
+  6a:	80 8b       	std	Z+16, r24	; 0x10
+	PORTB.PIN2CTRL |= PORT_PULLUPEN_bm | PORT_INVEN_bm;
+  6c:	82 89       	ldd	r24, Z+18	; 0x12
+  6e:	88 68       	ori	r24, 0x88	; 136
+  70:	82 8b       	std	Z+18, r24	; 0x12
+	PORTB.PIN3CTRL |= PORT_PULLUPEN_bm | PORT_INVEN_bm;
+  72:	83 89       	ldd	r24, Z+19	; 0x13
+  74:	88 68       	ori	r24, 0x88	; 136
+  76:	83 8b       	std	Z+19, r24	; 0x13
+  78:	08 95       	ret
+
+0000007a <run_button_func>:
+
+// primary button functionality
+// translates the capacitive touch > actual button press
+void run_button_func(void) {
+	
+	if (READ_PIN(PORTB, SENSE)) {
+  7a:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
+  7e:	80 ff       	sbrs	r24, 0
+  80:	06 c0       	rjmp	.+12     	; 0x8e <__EEPROM_REGION_LENGTH__+0xe>
+		SET_PIN(PORTB, PRESS);
+  82:	e0 e2       	ldi	r30, 0x20	; 32
+  84:	f4 e0       	ldi	r31, 0x04	; 4
+  86:	85 81       	ldd	r24, Z+5	; 0x05
+  88:	82 60       	ori	r24, 0x02	; 2
+  8a:	85 83       	std	Z+5, r24	; 0x05
+  8c:	08 95       	ret
+	} else {
+		CLR_PIN(PORTB, PRESS);
+  8e:	e0 e2       	ldi	r30, 0x20	; 32
+  90:	f4 e0       	ldi	r31, 0x04	; 4
+  92:	86 81       	ldd	r24, Z+6	; 0x06
+  94:	82 60       	ori	r24, 0x02	; 2
+  96:	86 83       	std	Z+6, r24	; 0x06
+  98:	08 95       	ret
+
+0000009a <run_LED_func>:
+
+// turn the LEDs on when a touch is detected
+// only if LED_CTL is true too
+void run_LED_func(void) {
+	
+	if (READ_PIN(PORTB, SENSE) && READ_PIN(PORTB, LED_CTL)) {
+  9a:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
+  9e:	80 ff       	sbrs	r24, 0
+  a0:	0d c0       	rjmp	.+26     	; 0xbc <run_LED_func+0x22>
+  a2:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
+  a6:	83 ff       	sbrs	r24, 3
+  a8:	09 c0       	rjmp	.+18     	; 0xbc <run_LED_func+0x22>
+		SET_PIN(PORTB, LED0);
+  aa:	e0 e2       	ldi	r30, 0x20	; 32
+  ac:	f4 e0       	ldi	r31, 0x04	; 4
+  ae:	85 81       	ldd	r24, Z+5	; 0x05
+  b0:	80 61       	ori	r24, 0x10	; 16
+  b2:	85 83       	std	Z+5, r24	; 0x05
+		SET_PIN(PORTB, LED1);
+  b4:	85 81       	ldd	r24, Z+5	; 0x05
+  b6:	80 62       	ori	r24, 0x20	; 32
+  b8:	85 83       	std	Z+5, r24	; 0x05
+  ba:	08 95       	ret
+	} else {
+		CLR_PIN(PORTB, LED0);
+  bc:	e0 e2       	ldi	r30, 0x20	; 32
+  be:	f4 e0       	ldi	r31, 0x04	; 4
+  c0:	86 81       	ldd	r24, Z+6	; 0x06
+  c2:	80 61       	ori	r24, 0x10	; 16
+  c4:	86 83       	std	Z+6, r24	; 0x06
+		CLR_PIN(PORTB, LED1);
+  c6:	86 81       	ldd	r24, Z+6	; 0x06
+  c8:	80 62       	ori	r24, 0x20	; 32
+  ca:	86 83       	std	Z+6, r24	; 0x06
+  cc:	08 95       	ret
+
+000000ce <run_buzz_func>:
+	
+}
+
+void run_buzz_func(void) {
+	
+	if (READ_PIN(PORTB, SENSE) && READ_PIN(PORTB, BUZZ_CTL)) {
+  ce:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
+  d2:	80 ff       	sbrs	r24, 0
+  d4:	1e c0       	rjmp	.+60     	; 0x112 <__DATA_REGION_LENGTH__+0x12>
+  d6:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
+  da:	82 ff       	sbrs	r24, 2
+  dc:	1a c0       	rjmp	.+52     	; 0x112 <__DATA_REGION_LENGTH__+0x12>
+		buzz_cnt++;
+  de:	80 91 00 3f 	lds	r24, 0x3F00	; 0x803f00 <__DATA_REGION_ORIGIN__>
+  e2:	90 91 01 3f 	lds	r25, 0x3F01	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
+  e6:	01 96       	adiw	r24, 0x01	; 1
+  e8:	80 93 00 3f 	sts	0x3F00, r24	; 0x803f00 <__DATA_REGION_ORIGIN__>
+  ec:	90 93 01 3f 	sts	0x3F01, r25	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
+		if (buzz_cnt == BUZZ_FREQ_CTL) {
+  f0:	80 91 00 3f 	lds	r24, 0x3F00	; 0x803f00 <__DATA_REGION_ORIGIN__>
+  f4:	90 91 01 3f 	lds	r25, 0x3F01	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
+  f8:	84 36       	cpi	r24, 0x64	; 100
+  fa:	91 05       	cpc	r25, r1
+  fc:	79 f4       	brne	.+30     	; 0x11c <__DATA_REGION_LENGTH__+0x1c>
+			buzz_cnt = 0;
+  fe:	10 92 00 3f 	sts	0x3F00, r1	; 0x803f00 <__DATA_REGION_ORIGIN__>
+ 102:	10 92 01 3f 	sts	0x3F01, r1	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
+			TGL_PIN(PORTA, BUZZ);
+ 106:	e0 e0       	ldi	r30, 0x00	; 0
+ 108:	f4 e0       	ldi	r31, 0x04	; 4
+ 10a:	87 81       	ldd	r24, Z+7	; 0x07
+ 10c:	80 64       	ori	r24, 0x40	; 64
+ 10e:	87 83       	std	Z+7, r24	; 0x07
+ 110:	08 95       	ret
+		}
+			
+	} else {
+		CLR_PIN(PORTA, BUZZ);
+ 112:	e0 e0       	ldi	r30, 0x00	; 0
+ 114:	f4 e0       	ldi	r31, 0x04	; 4
+ 116:	86 81       	ldd	r24, Z+6	; 0x06
+ 118:	80 64       	ori	r24, 0x40	; 64
+ 11a:	86 83       	std	Z+6, r24	; 0x06
+ 11c:	08 95       	ret
+
+0000011e <main>:
+void run_button_func(void);
+
+int main(void)
+{
+	// run initialization routine
+	io_config();
+ 11e:	9b df       	rcall	.-202    	; 0x56 <io_config>
+	while(1) {
+		
+		// run infinite loop
+		// this one is most important, does button functionality
+		// everything else can be as slow or fast as we want
+		run_button_func();
+ 120:	ac df       	rcall	.-168    	; 0x7a <run_button_func>
+		// control LEDs
+		run_LED_func();
+ 122:	bb df       	rcall	.-138    	; 0x9a <run_LED_func>
+		// control buzzer
+		run_buzz_func();
+ 124:	d4 df       	rcall	.-88     	; 0xce <run_buzz_func>
+ 126:	fc cf       	rjmp	.-8      	; 0x120 <main+0x2>
+
+00000128 <_exit>:
+ 128:	f8 94       	cli
+
+0000012a <__stop_program>:
+ 12a:	ff cf       	rjmp	.-2      	; 0x12a <__stop_program>

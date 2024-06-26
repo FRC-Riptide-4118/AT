@@ -1,0 +1,11 @@
+Added Component: Designator=R6(RESC0805(2012)_L)
+Add component (AddParameter): Name = "Case/Package"; Value = "0805"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "SMT"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.125W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10KX"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=SENSE Pin=R6-1
+Added Pin To Net: NetName=1V8 Pin=R6-2
+Added Member To Class: ClassName=st_v1 Member=Component R6 1KR5J
+Added Member To Class: ClassName=st_v1 Member=Component R10 1KR5J
