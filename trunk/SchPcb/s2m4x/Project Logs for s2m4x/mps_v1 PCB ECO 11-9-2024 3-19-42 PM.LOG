@@ -1,0 +1,25 @@
+Added Component: Designator=J1(SJ-352X)
+Added Component: Designator=J2(SJ-352X)
+Added Component: Designator=J3(SJ-352X)
+Added Component: Designator=J4(SJ-352X)
+Added Pin To Net: NetName=SR1 Pin=J1-1
+Added Pin To Net: NetName=SR1 Pin=J1-3
+Added Net: Name=SR1
+Added Pin To Net: NetName=SR2 Pin=J2-1
+Added Pin To Net: NetName=SR2 Pin=J2-3
+Added Net: Name=SR2
+Added Pin To Net: NetName=SR3 Pin=J3-1
+Added Pin To Net: NetName=SR3 Pin=J3-3
+Added Net: Name=SR3
+Added Pin To Net: NetName=SR4 Pin=J4-1
+Added Pin To Net: NetName=SR4 Pin=J4-3
+Added Net: Name=SR4
+Added Pin To Net: NetName=T1 Pin=J1-2
+Added Net: Name=T1
+Added Pin To Net: NetName=T2 Pin=J2-2
+Added Net: Name=T2
+Added Pin To Net: NetName=T3 Pin=J3-2
+Added Net: Name=T3
+Added Pin To Net: NetName=T4 Pin=J4-2
+Added Net: Name=T4
+Added Class: Name=s2m4x

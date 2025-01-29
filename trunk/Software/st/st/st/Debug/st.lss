@@ -3,29 +3,31 @@ st.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00803f00  00803f00  000001a0  2**0
+  0 .data         00000000  00803f00  00803f00  000002fa  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000012c  00000000  00000000  00000074  2**1
+  1 .text         00000286  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000003  00803f00  00803f00  000001a0  2**0
+  2 .bss          00000044  00803f00  00803f00  000002fa  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000001a0  2**0
+  3 .comment      00000030  00000000  00000000  000002fa  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001d0  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000032c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000040  00000000  00000000  0000020c  2**0
+  5 .debug_aranges 00000050  00000000  00000000  00000368  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000185d  00000000  00000000  0000024c  2**0
+  6 .debug_info   000018ac  00000000  00000000  000003b8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001540  00000000  00000000  00001aa9  2**0
+  7 .debug_abbrev 0000155b  00000000  00000000  00001c64  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000322  00000000  00000000  00002fe9  2**0
+  8 .debug_line   000003fd  00000000  00000000  000031bf  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000064  00000000  00000000  0000330c  2**2
+  9 .debug_frame  000000f4  00000000  00000000  000035bc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000b78  00000000  00000000  00003370  2**0
+ 10 .debug_str    00000ba3  00000000  00000000  000036b0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000030  00000000  00000000  00003ee8  2**0
+ 11 .debug_loc    000001b7  00000000  00000000  00004253  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000040  00000000  00000000  0000440a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -76,183 +78,438 @@ Disassembly of section .text:
   48:	1d 92       	st	X+, r1
 
 0000004a <.do_clear_bss_start>:
-  4a:	a3 30       	cpi	r26, 0x03	; 3
+  4a:	a4 34       	cpi	r26, 0x44	; 68
   4c:	b2 07       	cpc	r27, r18
   4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
-  50:	66 d0       	rcall	.+204    	; 0x11e <main>
-  52:	6a c0       	rjmp	.+212    	; 0x128 <_exit>
+  50:	02 d0       	rcall	.+4      	; 0x56 <main>
+  52:	17 c1       	rjmp	.+558    	; 0x282 <_exit>
 
 00000054 <__bad_interrupt>:
   54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
 
-00000056 <io_config>:
+00000056 <main>:
+uint8_t vote(void);
+
+// main entry point
+// do initialization, and then loop through tasks
+int main(void)
+{
+  56:	cf 93       	push	r28
+  58:	df 93       	push	r29
+  5a:	cd b7       	in	r28, 0x3d	; 61
+  5c:	de b7       	in	r29, 0x3e	; 62
+	// INITIALIZE
+	io_config();
+  5e:	08 d0       	rcall	.+16     	; 0x70 <io_config>
+	
+	// LOOP
+	while(1) {
+		
+		run_LP_filt();
+  60:	3c d0       	rcall	.+120    	; 0xda <run_LP_filt>
+		sense_filtered = vote();
+  62:	68 d0       	rcall	.+208    	; 0x134 <vote>
+  64:	80 93 40 3f 	sts	0x3F40, r24	; 0x803f40 <sense_filtered>
+		
+		// this one is most important, does button functionality
+		// everything else can be as slow or fast as we want
+		run_button_func();
+  68:	95 d0       	rcall	.+298    	; 0x194 <run_button_func>
+		// control LEDs
+		run_LED_func();
+  6a:	ab d0       	rcall	.+342    	; 0x1c2 <run_LED_func>
+		// control buzzer
+		run_buzz_func();
+  6c:	d5 d0       	rcall	.+426    	; 0x218 <run_buzz_func>
+	
+	}
+  6e:	f8 cf       	rjmp	.-16     	; 0x60 <main+0xa>
+
+00000070 <io_config>:
+    
+}
+
 // set up all of our IO stuff
 void io_config(void) {
+  70:	cf 93       	push	r28
+  72:	df 93       	push	r29
+  74:	cd b7       	in	r28, 0x3d	; 61
+  76:	de b7       	in	r29, 0x3e	; 62
 	
 	// set specific pins to be outputs
 	// note that other pins are inputs, which is the default
 	PORTB.DIRSET |= (1 << PRESS);
-  56:	e0 e2       	ldi	r30, 0x20	; 32
-  58:	f4 e0       	ldi	r31, 0x04	; 4
-  5a:	81 81       	ldd	r24, Z+1	; 0x01
-  5c:	82 60       	ori	r24, 0x02	; 2
-  5e:	81 83       	std	Z+1, r24	; 0x01
-	PORTB.DIRSET |= (1 << BUZZ) | (1 << LED0) | (1 << LED1);
-  60:	81 81       	ldd	r24, Z+1	; 0x01
-  62:	80 67       	ori	r24, 0x70	; 112
-  64:	81 83       	std	Z+1, r24	; 0x01
+  78:	80 e2       	ldi	r24, 0x20	; 32
+  7a:	94 e0       	ldi	r25, 0x04	; 4
+  7c:	20 e2       	ldi	r18, 0x20	; 32
+  7e:	34 e0       	ldi	r19, 0x04	; 4
+  80:	f9 01       	movw	r30, r18
+  82:	21 81       	ldd	r18, Z+1	; 0x01
+  84:	22 60       	ori	r18, 0x02	; 2
+  86:	fc 01       	movw	r30, r24
+  88:	21 83       	std	Z+1, r18	; 0x01
+	PORTA.DIRSET |= (1 << BUZZ) | (1 << LED0) | (1 << LED1);
+  8a:	80 e0       	ldi	r24, 0x00	; 0
+  8c:	94 e0       	ldi	r25, 0x04	; 4
+  8e:	20 e0       	ldi	r18, 0x00	; 0
+  90:	34 e0       	ldi	r19, 0x04	; 4
+  92:	f9 01       	movw	r30, r18
+  94:	21 81       	ldd	r18, Z+1	; 0x01
+  96:	20 67       	ori	r18, 0x70	; 112
+  98:	fc 01       	movw	r30, r24
+  9a:	21 83       	std	Z+1, r18	; 0x01
 	
 	// let's set the internal pull-up just in case on the SENSE line
 	// we can also invert it to make the logic cleaner
 	// going to do the same with the LED_CTL and BUZZ_CTL inputs
 	PORTB.PIN0CTRL |= PORT_PULLUPEN_bm | PORT_INVEN_bm;
-  66:	80 89       	ldd	r24, Z+16	; 0x10
-  68:	88 68       	ori	r24, 0x88	; 136
-  6a:	80 8b       	std	Z+16, r24	; 0x10
+  9c:	80 e2       	ldi	r24, 0x20	; 32
+  9e:	94 e0       	ldi	r25, 0x04	; 4
+  a0:	20 e2       	ldi	r18, 0x20	; 32
+  a2:	34 e0       	ldi	r19, 0x04	; 4
+  a4:	f9 01       	movw	r30, r18
+  a6:	20 89       	ldd	r18, Z+16	; 0x10
+  a8:	28 68       	ori	r18, 0x88	; 136
+  aa:	fc 01       	movw	r30, r24
+  ac:	20 8b       	std	Z+16, r18	; 0x10
 	PORTB.PIN2CTRL |= PORT_PULLUPEN_bm | PORT_INVEN_bm;
-  6c:	82 89       	ldd	r24, Z+18	; 0x12
-  6e:	88 68       	ori	r24, 0x88	; 136
-  70:	82 8b       	std	Z+18, r24	; 0x12
+  ae:	80 e2       	ldi	r24, 0x20	; 32
+  b0:	94 e0       	ldi	r25, 0x04	; 4
+  b2:	20 e2       	ldi	r18, 0x20	; 32
+  b4:	34 e0       	ldi	r19, 0x04	; 4
+  b6:	f9 01       	movw	r30, r18
+  b8:	22 89       	ldd	r18, Z+18	; 0x12
+  ba:	28 68       	ori	r18, 0x88	; 136
+  bc:	fc 01       	movw	r30, r24
+  be:	22 8b       	std	Z+18, r18	; 0x12
 	PORTB.PIN3CTRL |= PORT_PULLUPEN_bm | PORT_INVEN_bm;
-  72:	83 89       	ldd	r24, Z+19	; 0x13
-  74:	88 68       	ori	r24, 0x88	; 136
-  76:	83 8b       	std	Z+19, r24	; 0x13
-  78:	08 95       	ret
+  c0:	80 e2       	ldi	r24, 0x20	; 32
+  c2:	94 e0       	ldi	r25, 0x04	; 4
+  c4:	20 e2       	ldi	r18, 0x20	; 32
+  c6:	34 e0       	ldi	r19, 0x04	; 4
+  c8:	f9 01       	movw	r30, r18
+  ca:	23 89       	ldd	r18, Z+19	; 0x13
+  cc:	28 68       	ori	r18, 0x88	; 136
+  ce:	fc 01       	movw	r30, r24
+  d0:	23 8b       	std	Z+19, r18	; 0x13
+	
+}
+  d2:	00 00       	nop
+  d4:	df 91       	pop	r29
+  d6:	cf 91       	pop	r28
+  d8:	08 95       	ret
 
-0000007a <run_button_func>:
+000000da <run_LP_filt>:
+
+// filter out any potential glitches on the sense line
+// we are just going to save same past samples and then do majority vote
+void run_LP_filt(void) {
+  da:	cf 93       	push	r28
+  dc:	df 93       	push	r29
+  de:	00 d0       	rcall	.+0      	; 0xe0 <run_LP_filt+0x6>
+  e0:	cd b7       	in	r28, 0x3d	; 61
+  e2:	de b7       	in	r29, 0x3e	; 62
+	
+	for (uint16_t i = SENSE_BUFF_LENGTH; i > 0; i--)
+  e4:	80 e4       	ldi	r24, 0x40	; 64
+  e6:	90 e0       	ldi	r25, 0x00	; 0
+  e8:	89 83       	std	Y+1, r24	; 0x01
+  ea:	9a 83       	std	Y+2, r25	; 0x02
+  ec:	12 c0       	rjmp	.+36     	; 0x112 <__DATA_REGION_LENGTH__+0x12>
+		sense_buff[i] = sense_buff[i-1];
+  ee:	89 81       	ldd	r24, Y+1	; 0x01
+  f0:	9a 81       	ldd	r25, Y+2	; 0x02
+  f2:	01 97       	sbiw	r24, 0x01	; 1
+  f4:	80 50       	subi	r24, 0x00	; 0
+  f6:	91 4c       	sbci	r25, 0xC1	; 193
+  f8:	fc 01       	movw	r30, r24
+  fa:	20 81       	ld	r18, Z
+  fc:	89 81       	ldd	r24, Y+1	; 0x01
+  fe:	9a 81       	ldd	r25, Y+2	; 0x02
+ 100:	80 50       	subi	r24, 0x00	; 0
+ 102:	91 4c       	sbci	r25, 0xC1	; 193
+ 104:	fc 01       	movw	r30, r24
+ 106:	20 83       	st	Z, r18
+
+// filter out any potential glitches on the sense line
+// we are just going to save same past samples and then do majority vote
+void run_LP_filt(void) {
+	
+	for (uint16_t i = SENSE_BUFF_LENGTH; i > 0; i--)
+ 108:	89 81       	ldd	r24, Y+1	; 0x01
+ 10a:	9a 81       	ldd	r25, Y+2	; 0x02
+ 10c:	01 97       	sbiw	r24, 0x01	; 1
+ 10e:	89 83       	std	Y+1, r24	; 0x01
+ 110:	9a 83       	std	Y+2, r25	; 0x02
+ 112:	89 81       	ldd	r24, Y+1	; 0x01
+ 114:	9a 81       	ldd	r25, Y+2	; 0x02
+ 116:	89 2b       	or	r24, r25
+ 118:	51 f7       	brne	.-44     	; 0xee <run_LP_filt+0x14>
+		sense_buff[i] = sense_buff[i-1];
+	sense_buff[0] = READ_PIN(PORTB, SENSE);
+ 11a:	80 e2       	ldi	r24, 0x20	; 32
+ 11c:	94 e0       	ldi	r25, 0x04	; 4
+ 11e:	fc 01       	movw	r30, r24
+ 120:	80 85       	ldd	r24, Z+8	; 0x08
+ 122:	81 70       	andi	r24, 0x01	; 1
+ 124:	80 93 00 3f 	sts	0x3F00, r24	; 0x803f00 <__DATA_REGION_ORIGIN__>
+	
+}
+ 128:	00 00       	nop
+ 12a:	0f 90       	pop	r0
+ 12c:	0f 90       	pop	r0
+ 12e:	df 91       	pop	r29
+ 130:	cf 91       	pop	r28
+ 132:	08 95       	ret
+
+00000134 <vote>:
+
+// run majority vote
+uint8_t vote(void) {
+ 134:	cf 93       	push	r28
+ 136:	df 93       	push	r29
+ 138:	00 d0       	rcall	.+0      	; 0x13a <vote+0x6>
+ 13a:	00 d0       	rcall	.+0      	; 0x13c <vote+0x8>
+ 13c:	cd b7       	in	r28, 0x3d	; 61
+ 13e:	de b7       	in	r29, 0x3e	; 62
+	
+	uint16_t cnt = 0;
+ 140:	19 82       	std	Y+1, r1	; 0x01
+ 142:	1a 82       	std	Y+2, r1	; 0x02
+	for (uint16_t i = 0; i < SENSE_BUFF_LENGTH; i++)
+ 144:	1b 82       	std	Y+3, r1	; 0x03
+ 146:	1c 82       	std	Y+4, r1	; 0x04
+ 148:	13 c0       	rjmp	.+38     	; 0x170 <vote+0x3c>
+		cnt += sense_buff[i];
+ 14a:	8b 81       	ldd	r24, Y+3	; 0x03
+ 14c:	9c 81       	ldd	r25, Y+4	; 0x04
+ 14e:	80 50       	subi	r24, 0x00	; 0
+ 150:	91 4c       	sbci	r25, 0xC1	; 193
+ 152:	fc 01       	movw	r30, r24
+ 154:	80 81       	ld	r24, Z
+ 156:	88 2f       	mov	r24, r24
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	29 81       	ldd	r18, Y+1	; 0x01
+ 15c:	3a 81       	ldd	r19, Y+2	; 0x02
+ 15e:	82 0f       	add	r24, r18
+ 160:	93 1f       	adc	r25, r19
+ 162:	89 83       	std	Y+1, r24	; 0x01
+ 164:	9a 83       	std	Y+2, r25	; 0x02
+
+// run majority vote
+uint8_t vote(void) {
+	
+	uint16_t cnt = 0;
+	for (uint16_t i = 0; i < SENSE_BUFF_LENGTH; i++)
+ 166:	8b 81       	ldd	r24, Y+3	; 0x03
+ 168:	9c 81       	ldd	r25, Y+4	; 0x04
+ 16a:	01 96       	adiw	r24, 0x01	; 1
+ 16c:	8b 83       	std	Y+3, r24	; 0x03
+ 16e:	9c 83       	std	Y+4, r25	; 0x04
+ 170:	8b 81       	ldd	r24, Y+3	; 0x03
+ 172:	9c 81       	ldd	r25, Y+4	; 0x04
+ 174:	80 34       	cpi	r24, 0x40	; 64
+ 176:	91 05       	cpc	r25, r1
+ 178:	40 f3       	brcs	.-48     	; 0x14a <vote+0x16>
+		cnt += sense_buff[i];
+	
+	if (cnt >= SENSE_BUFF_LENGTH / 2)
+ 17a:	89 81       	ldd	r24, Y+1	; 0x01
+ 17c:	9a 81       	ldd	r25, Y+2	; 0x02
+ 17e:	80 97       	sbiw	r24, 0x20	; 32
+ 180:	10 f0       	brcs	.+4      	; 0x186 <vote+0x52>
+		return 1;
+ 182:	81 e0       	ldi	r24, 0x01	; 1
+ 184:	01 c0       	rjmp	.+2      	; 0x188 <vote+0x54>
+	
+	return 0;
+ 186:	80 e0       	ldi	r24, 0x00	; 0
+	
+}
+ 188:	24 96       	adiw	r28, 0x04	; 4
+ 18a:	cd bf       	out	0x3d, r28	; 61
+ 18c:	de bf       	out	0x3e, r29	; 62
+ 18e:	df 91       	pop	r29
+ 190:	cf 91       	pop	r28
+ 192:	08 95       	ret
+
+00000194 <run_button_func>:
 
 // primary button functionality
 // translates the capacitive touch > actual button press
 void run_button_func(void) {
+ 194:	cf 93       	push	r28
+ 196:	df 93       	push	r29
+ 198:	cd b7       	in	r28, 0x3d	; 61
+ 19a:	de b7       	in	r29, 0x3e	; 62
 	
-	if (READ_PIN(PORTB, SENSE)) {
-  7a:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
-  7e:	80 ff       	sbrs	r24, 0
-  80:	06 c0       	rjmp	.+12     	; 0x8e <__EEPROM_REGION_LENGTH__+0xe>
+	if (sense_filtered) {
+ 19c:	80 91 40 3f 	lds	r24, 0x3F40	; 0x803f40 <sense_filtered>
+ 1a0:	88 23       	and	r24, r24
+ 1a2:	31 f0       	breq	.+12     	; 0x1b0 <run_button_func+0x1c>
 		SET_PIN(PORTB, PRESS);
-  82:	e0 e2       	ldi	r30, 0x20	; 32
-  84:	f4 e0       	ldi	r31, 0x04	; 4
-  86:	85 81       	ldd	r24, Z+5	; 0x05
-  88:	82 60       	ori	r24, 0x02	; 2
-  8a:	85 83       	std	Z+5, r24	; 0x05
-  8c:	08 95       	ret
+ 1a4:	80 e2       	ldi	r24, 0x20	; 32
+ 1a6:	94 e0       	ldi	r25, 0x04	; 4
+ 1a8:	22 e0       	ldi	r18, 0x02	; 2
+ 1aa:	fc 01       	movw	r30, r24
+ 1ac:	25 83       	std	Z+5, r18	; 0x05
 	} else {
 		CLR_PIN(PORTB, PRESS);
-  8e:	e0 e2       	ldi	r30, 0x20	; 32
-  90:	f4 e0       	ldi	r31, 0x04	; 4
-  92:	86 81       	ldd	r24, Z+6	; 0x06
-  94:	82 60       	ori	r24, 0x02	; 2
-  96:	86 83       	std	Z+6, r24	; 0x06
-  98:	08 95       	ret
+	}
+	
+}
+ 1ae:	05 c0       	rjmp	.+10     	; 0x1ba <run_button_func+0x26>
+void run_button_func(void) {
+	
+	if (sense_filtered) {
+		SET_PIN(PORTB, PRESS);
+	} else {
+		CLR_PIN(PORTB, PRESS);
+ 1b0:	80 e2       	ldi	r24, 0x20	; 32
+ 1b2:	94 e0       	ldi	r25, 0x04	; 4
+ 1b4:	22 e0       	ldi	r18, 0x02	; 2
+ 1b6:	fc 01       	movw	r30, r24
+ 1b8:	26 83       	std	Z+6, r18	; 0x06
+	}
+	
+}
+ 1ba:	00 00       	nop
+ 1bc:	df 91       	pop	r29
+ 1be:	cf 91       	pop	r28
+ 1c0:	08 95       	ret
 
-0000009a <run_LED_func>:
+000001c2 <run_LED_func>:
 
 // turn the LEDs on when a touch is detected
 // only if LED_CTL is true too
 void run_LED_func(void) {
+ 1c2:	cf 93       	push	r28
+ 1c4:	df 93       	push	r29
+ 1c6:	cd b7       	in	r28, 0x3d	; 61
+ 1c8:	de b7       	in	r29, 0x3e	; 62
 	
-	if (READ_PIN(PORTB, SENSE) && READ_PIN(PORTB, LED_CTL)) {
-  9a:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
-  9e:	80 ff       	sbrs	r24, 0
-  a0:	0d c0       	rjmp	.+26     	; 0xbc <run_LED_func+0x22>
-  a2:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
-  a6:	83 ff       	sbrs	r24, 3
-  a8:	09 c0       	rjmp	.+18     	; 0xbc <run_LED_func+0x22>
-		SET_PIN(PORTB, LED0);
-  aa:	e0 e2       	ldi	r30, 0x20	; 32
-  ac:	f4 e0       	ldi	r31, 0x04	; 4
-  ae:	85 81       	ldd	r24, Z+5	; 0x05
-  b0:	80 61       	ori	r24, 0x10	; 16
-  b2:	85 83       	std	Z+5, r24	; 0x05
-		SET_PIN(PORTB, LED1);
-  b4:	85 81       	ldd	r24, Z+5	; 0x05
-  b6:	80 62       	ori	r24, 0x20	; 32
-  b8:	85 83       	std	Z+5, r24	; 0x05
-  ba:	08 95       	ret
+	if (sense_filtered && READ_PIN(PORTB, LED_CTL)) {
+ 1ca:	80 91 40 3f 	lds	r24, 0x3F40	; 0x803f40 <sense_filtered>
+ 1ce:	88 23       	and	r24, r24
+ 1d0:	a9 f0       	breq	.+42     	; 0x1fc <run_LED_func+0x3a>
+ 1d2:	80 e2       	ldi	r24, 0x20	; 32
+ 1d4:	94 e0       	ldi	r25, 0x04	; 4
+ 1d6:	fc 01       	movw	r30, r24
+ 1d8:	80 85       	ldd	r24, Z+8	; 0x08
+ 1da:	88 2f       	mov	r24, r24
+ 1dc:	90 e0       	ldi	r25, 0x00	; 0
+ 1de:	88 70       	andi	r24, 0x08	; 8
+ 1e0:	99 27       	eor	r25, r25
+ 1e2:	89 2b       	or	r24, r25
+ 1e4:	59 f0       	breq	.+22     	; 0x1fc <run_LED_func+0x3a>
+		SET_PIN(PORTA, LED0);
+ 1e6:	80 e0       	ldi	r24, 0x00	; 0
+ 1e8:	94 e0       	ldi	r25, 0x04	; 4
+ 1ea:	20 e1       	ldi	r18, 0x10	; 16
+ 1ec:	fc 01       	movw	r30, r24
+ 1ee:	25 83       	std	Z+5, r18	; 0x05
+		SET_PIN(PORTA, LED1);
+ 1f0:	80 e0       	ldi	r24, 0x00	; 0
+ 1f2:	94 e0       	ldi	r25, 0x04	; 4
+ 1f4:	20 e2       	ldi	r18, 0x20	; 32
+ 1f6:	fc 01       	movw	r30, r24
+ 1f8:	25 83       	std	Z+5, r18	; 0x05
+ 1fa:	0a c0       	rjmp	.+20     	; 0x210 <run_LED_func+0x4e>
 	} else {
-		CLR_PIN(PORTB, LED0);
-  bc:	e0 e2       	ldi	r30, 0x20	; 32
-  be:	f4 e0       	ldi	r31, 0x04	; 4
-  c0:	86 81       	ldd	r24, Z+6	; 0x06
-  c2:	80 61       	ori	r24, 0x10	; 16
-  c4:	86 83       	std	Z+6, r24	; 0x06
-		CLR_PIN(PORTB, LED1);
-  c6:	86 81       	ldd	r24, Z+6	; 0x06
-  c8:	80 62       	ori	r24, 0x20	; 32
-  ca:	86 83       	std	Z+6, r24	; 0x06
-  cc:	08 95       	ret
-
-000000ce <run_buzz_func>:
+		CLR_PIN(PORTA, LED0);
+ 1fc:	80 e0       	ldi	r24, 0x00	; 0
+ 1fe:	94 e0       	ldi	r25, 0x04	; 4
+ 200:	20 e1       	ldi	r18, 0x10	; 16
+ 202:	fc 01       	movw	r30, r24
+ 204:	26 83       	std	Z+6, r18	; 0x06
+		CLR_PIN(PORTA, LED1);
+ 206:	80 e0       	ldi	r24, 0x00	; 0
+ 208:	94 e0       	ldi	r25, 0x04	; 4
+ 20a:	20 e2       	ldi	r18, 0x20	; 32
+ 20c:	fc 01       	movw	r30, r24
+ 20e:	26 83       	std	Z+6, r18	; 0x06
+	}
 	
 }
+ 210:	00 00       	nop
+ 212:	df 91       	pop	r29
+ 214:	cf 91       	pop	r28
+ 216:	08 95       	ret
 
+00000218 <run_buzz_func>:
+
+// control the buzzer
+// note: if the tone is super horrible, there are better ways to do this
+// currently outputting a crappy square wave at ~1KHz and filtering it down to a tone
+void run_buzz_func(void) {
+ 218:	cf 93       	push	r28
+ 21a:	df 93       	push	r29
+ 21c:	cd b7       	in	r28, 0x3d	; 61
+ 21e:	de b7       	in	r29, 0x3e	; 62
+	
+	if (sense_filtered && READ_PIN(PORTB, BUZZ_CTL)) {
+ 220:	80 91 40 3f 	lds	r24, 0x3F40	; 0x803f40 <sense_filtered>
+ 224:	88 23       	and	r24, r24
+ 226:	21 f1       	breq	.+72     	; 0x270 <run_buzz_func+0x58>
+ 228:	80 e2       	ldi	r24, 0x20	; 32
+ 22a:	94 e0       	ldi	r25, 0x04	; 4
+ 22c:	fc 01       	movw	r30, r24
+ 22e:	80 85       	ldd	r24, Z+8	; 0x08
+ 230:	88 2f       	mov	r24, r24
+ 232:	90 e0       	ldi	r25, 0x00	; 0
+ 234:	84 70       	andi	r24, 0x04	; 4
+ 236:	99 27       	eor	r25, r25
+ 238:	89 2b       	or	r24, r25
+ 23a:	d1 f0       	breq	.+52     	; 0x270 <run_buzz_func+0x58>
+		buzz_cnt++;
+ 23c:	80 91 41 3f 	lds	r24, 0x3F41	; 0x803f41 <buzz_cnt>
+ 240:	90 91 42 3f 	lds	r25, 0x3F42	; 0x803f42 <buzz_cnt+0x1>
+ 244:	01 96       	adiw	r24, 0x01	; 1
+ 246:	80 93 41 3f 	sts	0x3F41, r24	; 0x803f41 <buzz_cnt>
+ 24a:	90 93 42 3f 	sts	0x3F42, r25	; 0x803f42 <buzz_cnt+0x1>
+		if (buzz_cnt == BUZZ_FREQ_CTL) {
+ 24e:	80 91 41 3f 	lds	r24, 0x3F41	; 0x803f41 <buzz_cnt>
+ 252:	90 91 42 3f 	lds	r25, 0x3F42	; 0x803f42 <buzz_cnt+0x1>
+ 256:	84 3e       	cpi	r24, 0xE4	; 228
+ 258:	9c 40       	sbci	r25, 0x0C	; 12
+ 25a:	79 f4       	brne	.+30     	; 0x27a <run_buzz_func+0x62>
+			buzz_cnt = 0;
+ 25c:	10 92 41 3f 	sts	0x3F41, r1	; 0x803f41 <buzz_cnt>
+ 260:	10 92 42 3f 	sts	0x3F42, r1	; 0x803f42 <buzz_cnt+0x1>
+			TGL_PIN(PORTA, BUZZ);
+ 264:	80 e0       	ldi	r24, 0x00	; 0
+ 266:	94 e0       	ldi	r25, 0x04	; 4
+ 268:	20 e4       	ldi	r18, 0x40	; 64
+ 26a:	fc 01       	movw	r30, r24
+ 26c:	27 83       	std	Z+7, r18	; 0x07
+// currently outputting a crappy square wave at ~1KHz and filtering it down to a tone
 void run_buzz_func(void) {
 	
-	if (READ_PIN(PORTB, SENSE) && READ_PIN(PORTB, BUZZ_CTL)) {
-  ce:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
-  d2:	80 ff       	sbrs	r24, 0
-  d4:	1e c0       	rjmp	.+60     	; 0x112 <__DATA_REGION_LENGTH__+0x12>
-  d6:	80 91 28 04 	lds	r24, 0x0428	; 0x800428 <__RODATA_PM_OFFSET__+0x7f8428>
-  da:	82 ff       	sbrs	r24, 2
-  dc:	1a c0       	rjmp	.+52     	; 0x112 <__DATA_REGION_LENGTH__+0x12>
+	if (sense_filtered && READ_PIN(PORTB, BUZZ_CTL)) {
 		buzz_cnt++;
-  de:	80 91 00 3f 	lds	r24, 0x3F00	; 0x803f00 <__DATA_REGION_ORIGIN__>
-  e2:	90 91 01 3f 	lds	r25, 0x3F01	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
-  e6:	01 96       	adiw	r24, 0x01	; 1
-  e8:	80 93 00 3f 	sts	0x3F00, r24	; 0x803f00 <__DATA_REGION_ORIGIN__>
-  ec:	90 93 01 3f 	sts	0x3F01, r25	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
 		if (buzz_cnt == BUZZ_FREQ_CTL) {
-  f0:	80 91 00 3f 	lds	r24, 0x3F00	; 0x803f00 <__DATA_REGION_ORIGIN__>
-  f4:	90 91 01 3f 	lds	r25, 0x3F01	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
-  f8:	84 36       	cpi	r24, 0x64	; 100
-  fa:	91 05       	cpc	r25, r1
-  fc:	79 f4       	brne	.+30     	; 0x11c <__DATA_REGION_LENGTH__+0x1c>
+ 26e:	05 c0       	rjmp	.+10     	; 0x27a <run_buzz_func+0x62>
 			buzz_cnt = 0;
-  fe:	10 92 00 3f 	sts	0x3F00, r1	; 0x803f00 <__DATA_REGION_ORIGIN__>
- 102:	10 92 01 3f 	sts	0x3F01, r1	; 0x803f01 <__DATA_REGION_ORIGIN__+0x1>
 			TGL_PIN(PORTA, BUZZ);
- 106:	e0 e0       	ldi	r30, 0x00	; 0
- 108:	f4 e0       	ldi	r31, 0x04	; 4
- 10a:	87 81       	ldd	r24, Z+7	; 0x07
- 10c:	80 64       	ori	r24, 0x40	; 64
- 10e:	87 83       	std	Z+7, r24	; 0x07
- 110:	08 95       	ret
 		}
 			
 	} else {
 		CLR_PIN(PORTA, BUZZ);
- 112:	e0 e0       	ldi	r30, 0x00	; 0
- 114:	f4 e0       	ldi	r31, 0x04	; 4
- 116:	86 81       	ldd	r24, Z+6	; 0x06
- 118:	80 64       	ori	r24, 0x40	; 64
- 11a:	86 83       	std	Z+6, r24	; 0x06
- 11c:	08 95       	ret
+ 270:	80 e0       	ldi	r24, 0x00	; 0
+ 272:	94 e0       	ldi	r25, 0x04	; 4
+ 274:	20 e4       	ldi	r18, 0x40	; 64
+ 276:	fc 01       	movw	r30, r24
+ 278:	26 83       	std	Z+6, r18	; 0x06
+		// PORTA.OUTCLR |= (1 << BUZZ);
+	}
+	
+ 27a:	00 00       	nop
+ 27c:	df 91       	pop	r29
+ 27e:	cf 91       	pop	r28
+ 280:	08 95       	ret
 
-0000011e <main>:
-void run_button_func(void);
+00000282 <_exit>:
+ 282:	f8 94       	cli
 
-int main(void)
-{
-	// run initialization routine
-	io_config();
- 11e:	9b df       	rcall	.-202    	; 0x56 <io_config>
-	while(1) {
-		
-		// run infinite loop
-		// this one is most important, does button functionality
-		// everything else can be as slow or fast as we want
-		run_button_func();
- 120:	ac df       	rcall	.-168    	; 0x7a <run_button_func>
-		// control LEDs
-		run_LED_func();
- 122:	bb df       	rcall	.-138    	; 0x9a <run_LED_func>
-		// control buzzer
-		run_buzz_func();
- 124:	d4 df       	rcall	.-88     	; 0xce <run_buzz_func>
- 126:	fc cf       	rjmp	.-8      	; 0x120 <main+0x2>
-
-00000128 <_exit>:
- 128:	f8 94       	cli
-
-0000012a <__stop_program>:
- 12a:	ff cf       	rjmp	.-2      	; 0x12a <__stop_program>
+00000284 <__stop_program>:
+ 284:	ff cf       	rjmp	.-2      	; 0x284 <__stop_program>

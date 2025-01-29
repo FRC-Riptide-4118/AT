@@ -1,0 +1,22 @@
+Add Component: Footprint Not Found LED_TH
+Add Component: Footprint Not Found LED_TH
+Add Component: Footprint Not Found LED_TH
+Add Component: Footprint Not Found LED_TH
+Add Component: Footprint Not Found RES_TH
+Add Component: Footprint Not Found RES_TH
+Add Component: Footprint Not Found RES_TH
+Add Component: Footprint Not Found RES_TH
+Added Net: Name=GND
+Added Net: Name=NetLED1_1
+Added Net: Name=NetLED2_1
+Added Net: Name=NetLED3_1
+Added Net: Name=NetLED4_1
+Added Net: Name=VCC
+Add Class Member: Failed to add class member : Component LED1 LED?
+Add Class Member: Failed to add class member : Component LED2 LED?
+Add Class Member: Failed to add class member : Component LED3 LED?
+Add Class Member: Failed to add class member : Component LED4 LED?
+Add Class Member: Failed to add class member : Component R1 RES_GENERIC
+Add Class Member: Failed to add class member : Component R2 RES_GENERIC
+Add Class Member: Failed to add class member : Component R3 RES_GENERIC
+Add Class Member: Failed to add class member : Component R4 RES_GENERIC

@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=TIP Pin=RD V1.0-1
+Removed Pin From Net: NetName=RING_SLEEVE Pin=RD V1.0-2
+Removed Member From Class: ClassName=rd Member=RD V1.0
+Added Component: Designator=KEY1(SW_4118)
+Added Pin To Net: NetName=TIP Pin=KEY1-1
+Added Pin To Net: NetName=TIP Pin=KEY1-2
+Added Pin To Net: NetName=RING_SLEEVE Pin=KEY1-3
+Added Pin To Net: NetName=RING_SLEEVE Pin=KEY1-4
+Added Member To Class: ClassName=rd Member=Component KEY1 SW_4118

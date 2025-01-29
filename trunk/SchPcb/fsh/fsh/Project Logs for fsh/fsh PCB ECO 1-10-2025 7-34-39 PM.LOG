@@ -1,0 +1,6 @@
+Added Component: Designator=U1(SW_4118_FLAT)
+Added Pin To Net: NetName=NetJ1_1 Pin=U1-1
+Added Pin To Net: NetName=NetJ1_1 Pin=U1-2
+Added Pin To Net: NetName=NetJ1_2 Pin=U1-3
+Added Pin To Net: NetName=NetJ1_2 Pin=U1-4
+Added Member To Class: ClassName=fsh Member=Component U1 SW_4118
